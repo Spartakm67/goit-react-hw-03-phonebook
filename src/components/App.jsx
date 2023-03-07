@@ -16,7 +16,37 @@ state = {
     filter: '',
   };
 
+  //======== HW3 Methods Added=============================================
+componentDidMount() {
+  console.log('App componentDidUpdate');
   
+  const defaultContacts = this.state.contacts;
+  console.log('Default Contacts', defaultContacts);
+
+  const actualContacts = localStorage.getItem('contacts');
+  
+  if (actualContacts !== null) {
+    const parsedContacts = JSON.parse(actualContacts);
+    console.log('Parsed Contacts', parsedContacts);
+    this.setState({ contacts: parsedContacts });
+    return;
+  } 
+// if (parsedContacts) {
+// this.setState({contacts: parsedContacts});
+//  };
+// this.setState({ contacts: defaultContacts });
+};
+
+componentDidUpdate(prevState) {
+
+  if (this.state.contacts !== prevState.contacts) {
+    console.log('Contacts Updated');
+
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+};
+//========================================================================
+
   handleInputChange = event => {
     this.setState({ filter: event.target.value });
   };
